@@ -1,0 +1,16 @@
+{
+  "title": "Tracker",
+  "pages": [
+    "creating-projects",
+    "creating-issues",
+    "components",
+    "milestones",
+    "issue-collaborators",
+    "labels",
+    "viewing-issues",
+    "related-issues",
+    "issue-templates",
+    "creating-action-items",
+    "scheduling-action-items"
+  ]
+}
