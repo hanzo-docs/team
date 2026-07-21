@@ -1,0 +1,12 @@
+{
+  "title": "Getting started",
+  "pages": [
+    "introduction",
+    "workspace-setup",
+    "learn-the-basics",
+    "api-tools",
+    "self-host",
+    "mobile-access",
+    "support"
+  ]
+}

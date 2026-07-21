@@ -1,0 +1,14 @@
+{
+  "title": "Cards",
+  "pages": [
+    "cards-overview",
+    "creating-cards",
+    "parent-child-cards",
+    "view-sort-filter-cards",
+    "cards-vs-documents",
+    "use-cases",
+    "types",
+    "tags",
+    "relations"
+  ]
+}
