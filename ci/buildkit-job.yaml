@@ -37,7 +37,7 @@ spec:
             - --frontend=dockerfile.v0
             - --opt=context=https://git.hanzo.ai/hanzo-docs/team.git#main
             - --opt=filename=Dockerfile
-            - --output=type=image,name=ghcr.io/hanzoai/team-docs:0.1.0,push=true
+            - --output=type=image,name=ghcr.io/hanzoai/team-docs:0.1.1,push=true
           env:
             - name: DOCKER_CONFIG
               value: /root/.docker
