@@ -6,8 +6,11 @@ tracking, documents, chat, planning, and drive. Published at
 
 Built on the house docs stack: **[Fumadocs](https://fumadocs.dev)** + Next.js
 (static export) + Tailwind, the same toolchain as the rest of the `hanzo-docs`
-org. Deployed to **Cloudflare Pages** by self-hosted CI (Cloudflare credentials
-are pulled from Hanzo KMS — never hard-coded).
+org. Served on the **Hanzo native stack** — the export is baked into
+`ghcr.io/hanzoai/team-docs` (`Dockerfile`: build stage + `ghcr.io/hanzoai/static`),
+built by in-cluster BuildKit / arcd (`ci/buildkit-job.yaml`, `.github/workflows/build.yml`),
+run by the operator (`universe` `crs/team-docs-site.yaml`), and routed by
+`hanzoai/ingress`' file provider. No Cloudflare Pages.
 
 ## Develop
 
@@ -32,8 +35,8 @@ source.config.ts    # Fumadocs MDX collections
 ```
 
 Add a page: drop an `.mdx` file under `content/docs/<section>/` and list its slug
-in that folder's `meta.json`. Push to `main` and CI redeploys to
-docs.hanzo.team.
+in that folder's `meta.json`. Push to `main` and native CI rebuilds
+`ghcr.io/hanzoai/team-docs` and rolls docs.hanzo.team forward.
 
 ## Attribution
 

@@ -1,0 +1,58 @@
+name: Build & Publish Team Docs
+
+# Native Hanzo build path — replaces the retired Cloudflare Pages deploy.
+# Builds the Fumadocs static export into ghcr.io/hanzoai/team-docs on a Hanzo
+# self-hosted runner (arcd — NO GitHub-hosted builders), then notifies the
+# universe repo so the operator CR (crs/team-docs-site.yaml) is bumped and the
+# cluster rolls forward. docs.hanzo.team is served by hanzoai/ingress' file
+# provider (universe infra/k8s/ingress/routes.yaml), NOT Cloudflare Pages.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: build-team-docs
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: hanzo-build-linux-amd64
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: version
+        run: echo "tag=0.1.$(git rev-list --count HEAD)" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64
+          push: true
+          tags: ghcr.io/hanzoai/team-docs:${{ steps.version.outputs.tag }}
+
+      - name: Notify universe
+        if: ${{ secrets.UNIVERSE_DISPATCH_TOKEN != '' }}
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.UNIVERSE_DISPATCH_TOKEN }}
+          repository: hanzoai/universe
+          event-type: team-docs
+          client-payload: |
+            {
+              "service": "team-docs",
+              "version": "${{ steps.version.outputs.tag }}",
+              "image":   "ghcr.io/hanzoai/team-docs:${{ steps.version.outputs.tag }}",
+              "sha":     "${{ github.sha }}"
+            }

@@ -1,0 +1,53 @@
+# Canonical native build for docs.hanzo.team — in-cluster BuildKit (moby/buildkit),
+# NO GitHub-hosted builders, no laptop build. Builds the repo's Dockerfile from the
+# public git.hanzo.ai mirror and pushes ghcr.io/hanzoai/team-docs.
+#
+#   kubectl -n hanzo delete job team-docs-build --ignore-not-found
+#   kubectl -n hanzo apply -f ci/buildkit-job.yaml
+#   kubectl -n hanzo logs -f job/team-docs-build
+#
+# Bump the image tag below per build (immutable tags only — never :latest/:main
+# for a cluster pin). Auth to GHCR is the cluster's kaniko-ghcr Secret.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: team-docs-build
+  namespace: hanzo
+spec:
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 3600
+  template:
+    spec:
+      restartPolicy: Never
+      nodeSelector:
+        doks.digitalocean.com/node-pool: runner-pool-32g
+      tolerations:
+        - key: dedicated
+          operator: Equal
+          value: ci-runner
+          effect: NoSchedule
+      containers:
+        - name: buildkit
+          image: moby/buildkit:v0.16.0
+          securityContext:
+            privileged: true
+          command: ["buildctl-daemonless.sh"]
+          args:
+            - build
+            - --frontend=dockerfile.v0
+            - --opt=context=https://git.hanzo.ai/hanzo-docs/team.git#main
+            - --opt=filename=Dockerfile
+            - --output=type=image,name=ghcr.io/hanzoai/team-docs:0.1.0,push=true
+          env:
+            - name: DOCKER_CONFIG
+              value: /root/.docker
+          volumeMounts:
+            - name: ghcr
+              mountPath: /root/.docker
+      volumes:
+        - name: ghcr
+          secret:
+            secretName: kaniko-ghcr
+            items:
+              - key: config.json
+                path: config.json
