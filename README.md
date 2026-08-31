@@ -8,7 +8,7 @@ Built on the house docs stack: **[Fumadocs](https://fumadocs.dev)** + Next.js
 (static export) + Tailwind, the same toolchain as the rest of the `hanzo-docs`
 org. Served on the **Hanzo native stack** — the export is baked into
 `ghcr.io/hanzoai/team-docs` (`Dockerfile`: build stage + `ghcr.io/hanzoai/static`),
-built by in-cluster BuildKit / arcd (`ci/buildkit-job.yaml`, `.github/workflows/build.yml`),
+built by in-cluster BuildKit (`ci/buildkit-job.yaml`, `.github/workflows/build.yml`),
 run by the operator (`universe` `crs/team-docs-site.yaml`), and routed by
 `hanzoai/ingress`' file provider. No Cloudflare Pages.
 
