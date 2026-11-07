@@ -20,7 +20,7 @@ export function baseOptions(): BaseLayoutProps {
       ),
       url: '/',
     },
-    githubUrl: 'https://github.com/hanzoai/team',
+    githubUrl: 'https://github.com/hanzoai/team2',
     links: [
       { text: 'Documentation', url: '/docs', active: 'nested-url' },
       { text: 'Hanzo AI', url: 'https://hanzo.ai' },

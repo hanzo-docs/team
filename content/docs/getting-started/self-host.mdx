@@ -3,7 +3,7 @@ title: Self-hosting Hanzo Team
 description: Learn how to get help with self-hosting Hanzo Team.
 ---
 
-We offer the option to self-host the Hanzo Team on your own server. All of the documentation for setting up and maintaining a self-hosted instance of Hanzo Team is available on our <a href="https://github.com/hanzoai/hanzo team-selfhost" target="_blank">hanzo team-selfhost</a> GitHub repository. The main repository readme includes documentation on the following:
+We offer the option to self-host the Hanzo Team on your own server. All of the documentation for setting up and maintaining a self-hosted instance of Hanzo Team is available on our <a href="https://github.com/hanzoai/team2" target="_blank">hanzoai/team2</a> GitHub repository. The main repository readme includes documentation on the following:
 
 * Cloning and configuring the repository
 * Setting up AWS SES email notifications
@@ -21,16 +21,16 @@ You can connect the Hanzo Team Desktop App to your self-hosted server by launchi
 
 **Windows:**
 1. Right-click the Hanzo Team shortcut → Properties
-2. In the "Target" field, add `--server https://your-hanzo team-server.com` after the exe path
-3. Example: `"C:\Program Files\Hanzo Team\Hanzo Team.exe" --server https://your-hanzo team-server.com`
+2. In the "Target" field, add `--server https://your-hanzo-team-server.com` after the exe path
+3. Example: `"C:\Program Files\Hanzo Team\Hanzo Team.exe" --server https://your-hanzo-team-server.com`
 
 **macOS:**
 ```bash
 # Using the app name
-open -a "Hanzo Team" --args --server https://your-hanzo team-server.com
+open -a "Hanzo Team" --args --server https://your-hanzo-team-server.com
 
 # Or using the executable path directly
-/Applications/Hanzo Team.app/Contents/MacOS/Hanzo Team --server https://your-hanzo team-server.com
+/Applications/Hanzo Team.app/Contents/MacOS/Hanzo Team --server https://your-hanzo-team-server.com
 ```
 
 ## Migrating data between self-hosted and cloud
@@ -41,6 +41,6 @@ In the reverse direction (migrating from could to self-hosted), if you are an ow
 
 ## Support for self-hosting
 
-Support for self-hosting is community-driven, and the best way to get in touch with others who are self-hosting is through our <a href="https://github.com/hanzoai/team/discussions" target="_blank">Slack</a> community in the `#open-source` channel. Here, you can ask questions, share tips, and get help from others who are also self-hosting Hanzo Team. 
+Support for self-hosting is community-driven, and the best way to get in touch with others who are self-hosting is through our <a href="https://discord.gg/XthHQQj" target="_blank">Discord</a> community in the `#open-source` channel. Here, you can ask questions, share tips, and get help from others who are also self-hosting Hanzo Team. 
 
 Our team is also active in the community and we do our best to respond to as many questions as we can. However, due to the technical complexities of self-hosting and the wide range of factors that vary between individual setups, we may not be able to respond to every request for self-hosting support. For this reason, we encourage community members to support each other whenever possible, and of course we welcome any supplementary documentation provided by the community to add to our repository.
